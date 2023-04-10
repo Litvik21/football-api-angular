@@ -1,8 +1,7 @@
 package stracture.football.controller;
 
-import stracture.football.dto.TeamCreateRequestDto;
+import stracture.football.dto.TeamRequestDto;
 import stracture.football.dto.TeamResponseDto;
-import stracture.football.dto.TeamUpdateRequestDto;
 import stracture.football.dto.mapper.TeamMapper;
 import stracture.football.model.Team;
 import stracture.football.service.TeamService;
@@ -21,17 +20,17 @@ public class TeamController {
     }
 
     @PostMapping
-    public TeamResponseDto save(@RequestBody TeamCreateRequestDto dto) {
-        Team team = teamMapper.toModelWhenCreate(dto);
+    public TeamResponseDto save(@RequestBody TeamRequestDto dto) {
+        Team team = teamMapper.toModel(dto);
         return teamMapper.toDto(teamService.save(team));
     }
 
     @PutMapping("/{id}")
-    public TeamResponseDto update(@RequestBody TeamUpdateRequestDto dto,
+    public TeamResponseDto update(@RequestBody TeamRequestDto dto,
                                   @PathVariable Long id) {
-        Team team = teamMapper.toModelWhenUpdate(dto);
+        Team team = teamMapper.toModel(dto);
         team.setId(id);
-        return teamMapper.toDtoWhenUpdate(teamService.update(team));
+        return teamMapper.toDto(teamService.update(team));
     }
 
     @GetMapping("/get/{id}")

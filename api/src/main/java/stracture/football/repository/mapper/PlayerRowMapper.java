@@ -1,12 +1,14 @@
 package stracture.football.repository.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 import stracture.football.model.Player;
 import stracture.football.service.TeamService;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+@Component
 public class PlayerRowMapper implements RowMapper<Player> {
     private final TeamService teamService;
 

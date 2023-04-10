@@ -17,7 +17,6 @@ public class PlayerServiceImpl implements PlayerService {
     private static final int MONTHS_IN_YEAR = 12;
     private static final int PERCENTAGE_BASE = 100;
     private static final long GENERAL_AMOUNT_OF_PLAYERS = 100000L;
-    private static final BigDecimal ONE = BigDecimal.ONE;
     private static final int EMPTY_BALANCE = 0;
 
     public PlayerServiceImpl(PlayerRepositoryImpl repository,
@@ -49,8 +48,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public boolean delete(Long id) {
-        repository.delete(id);
-        return repository.findById(id).isEmpty();
+        return repository.delete(id);
     }
 
     @Override
@@ -62,8 +60,7 @@ public class PlayerServiceImpl implements PlayerService {
         if (balanceOfTeamIncludedTransfer.compareTo(BigDecimal.ZERO) < EMPTY_BALANCE) {
             return false;
         }
-        doTransferOperation(newTeamOfPlayer, player, balanceOfTeamIncludedTransfer, totalCost);
-        return true;
+        return doTransferOperation(newTeamId, player, balanceOfTeamIncludedTransfer, totalCost);
     }
 
     @Override
@@ -71,25 +68,25 @@ public class PlayerServiceImpl implements PlayerService {
         return repository.findPlayersByTeamId(teamId);
     }
 
-    private void doTransferOperation(Team newTeam, Player player,
+    @Override
+    public List<Player> findAllByIds(List<Long> playerIds) {
+        return repository.findAllByIds(playerIds);
+    }
+
+    private boolean doTransferOperation(Long newTeamId, Player player,
                                      BigDecimal updatedBalance, BigDecimal totalCost) {
         Team currentTeam = player.getTeam();
-        currentTeam.setBalance(currentTeam.getBalance().add(totalCost));
-        currentTeam.getPlayers().remove(player);
-        teamService.save(currentTeam);
 
-        player.setTeam(newTeam);
-        save(player);
+        repository.updatePlayerTeamId(player.getId(), newTeamId);
 
-        newTeam.setBalance(updatedBalance);
-        newTeam.getPlayers().add(player);
-        teamService.save(newTeam);
+        return teamService.updatedBalances(newTeamId, currentTeam.getId(),
+                updatedBalance, currentTeam.getBalance().add(totalCost));
     }
 
     private BigDecimal calculateTotalCost(Player player) {
         BigDecimal transferCost = calculateCostOfTransfer(player);
         Double commission = player.getTeam().getCommission();
-        return transferCost.multiply(ONE.add(BigDecimal.valueOf(commission / PERCENTAGE_BASE)));
+        return transferCost.multiply(BigDecimal.ONE.add(BigDecimal.valueOf(commission / PERCENTAGE_BASE)));
     }
 
     private BigDecimal calculateCostOfTransfer(Player player) {

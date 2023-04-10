@@ -9,7 +9,3 @@ databaseChangeLog:
       file: /db/changelog/changes/initial-teams.sql
   - include:
       file: /db/changelog/changes/initial-players.sql
-#  - include:
-#      file: /db/changelog/changes/initial-teams-players.sql
-#  - include:
-#      file: /db/changelog/changes/add-players-into-teams.sql

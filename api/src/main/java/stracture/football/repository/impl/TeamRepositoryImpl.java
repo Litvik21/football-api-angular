@@ -1,14 +1,15 @@
 package stracture.football.repository.impl;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import stracture.football.model.Team;
 import stracture.football.repository.TeamRepository;
 import stracture.football.repository.mapper.TeamRowMapper;
-import stracture.football.service.PlayerService;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
@@ -25,11 +26,16 @@ public class TeamRepositoryImpl implements TeamRepository {
             "UPDATE teams SET title = ?, country = ?, city = ?, balance = ?, commission = ? WHERE id = ?";
     private static final String SQL_DELETE =
             "DELETE FROM teams WHERE id = ?";
+    private static final String SQL_UPDATE_BALANCES =
+            "UPDATE teams SET balance = CASE id WHEN ? THEN ? WHEN ? THEN ? ELSE balance END WHERE id IN (?, ?)";
 
     private final JdbcTemplate jdbcTemplate;
+    private final TeamRowMapper teamRowMapper;
 
-    public TeamRepositoryImpl(JdbcTemplate jdbcTemplate) {
+    public TeamRepositoryImpl(JdbcTemplate jdbcTemplate,
+                              TeamRowMapper teamRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.teamRowMapper = teamRowMapper;
     }
 
     @Override
@@ -50,12 +56,12 @@ public class TeamRepositoryImpl implements TeamRepository {
 
     @Override
     public Optional<Team> findById(Long id) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[]{id}, new TeamRowMapper()));
+        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[]{id}, teamRowMapper));
     }
 
     @Override
     public List<Team> findAll() {
-        return jdbcTemplate.query(SQL_FIND_ALL, new TeamRowMapper());
+        return jdbcTemplate.query(SQL_FIND_ALL, teamRowMapper);
     }
 
     @Override
@@ -71,7 +77,16 @@ public class TeamRepositoryImpl implements TeamRepository {
     }
 
     @Override
-    public void delete(Long id) {
-        jdbcTemplate.update(SQL_DELETE, id);
+    public boolean delete(Long id) {
+        return Boolean.TRUE.equals(jdbcTemplate.execute(SQL_DELETE, (PreparedStatementCallback<Boolean>) ps -> {
+            ps.setLong(1, id);
+            int rowsDeleted = ps.executeUpdate();
+            return rowsDeleted > 0;
+        }));
+    }
+
+    @Override
+    public boolean updatedBalances(Long id1, Long id2, BigDecimal balance1, BigDecimal balance2) {
+        return jdbcTemplate.update(SQL_UPDATE_BALANCES, id1, balance1, id2, balance2, id1, id2) > 0;
     }
 }

@@ -1,5 +1,6 @@
 package stracture.football.repository.impl;
 
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import stracture.football.model.Player;
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -26,13 +27,18 @@ public class PlayerRepositoryImpl implements PlayerRepository {
             "DELETE FROM players WHERE id = ?";
     private static final String SQL_FIND_BY_TEAM_ID =
             "SELECT * FROM players WHERE team_id = ?";
+    private static final String SQL_GET_ALL_BY_IDS =
+            "SELECT * FROM Player WHERE id IN (?)";
+    private static final String SQL_UPDATE_TEAM =
+            "UPDATE players SET team_id = ? WHERE id = ?";
 
     private final JdbcTemplate jdbcTemplate;
-    private final TeamService teamService;
+    private final PlayerRowMapper playerRowMapper;
 
-    public PlayerRepositoryImpl(JdbcTemplate jdbcTemplate, TeamService teamService) {
+    public PlayerRepositoryImpl(JdbcTemplate jdbcTemplate,
+                                PlayerRowMapper playerRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
-        this.teamService = teamService;
+        this.playerRowMapper = playerRowMapper;
     }
 
     @Override
@@ -53,12 +59,17 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 
     @Override
     public Optional<Player> findById(Long id) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[]{id}, new PlayerRowMapper(teamService)));
+        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[]{id}, playerRowMapper));
     }
 
     @Override
     public List<Player> findAll() {
-        return jdbcTemplate.query(SQL_FIND_ALL, new PlayerRowMapper(teamService));
+        return jdbcTemplate.query(SQL_FIND_ALL, playerRowMapper);
+    }
+
+    @Override
+    public List<Player> findAllByIds(List<Long> playerIds) {
+        return jdbcTemplate.query(SQL_GET_ALL_BY_IDS,  new Object[] { playerIds }, playerRowMapper);
     }
 
     @Override
@@ -74,12 +85,21 @@ public class PlayerRepositoryImpl implements PlayerRepository {
     }
 
     @Override
-    public void delete(Long id) {
-        jdbcTemplate.update(SQL_DELETE, id);
+    public boolean delete(Long id) {
+        return Boolean.TRUE.equals(jdbcTemplate.execute(SQL_DELETE, (PreparedStatementCallback<Boolean>) ps -> {
+            ps.setLong(1, id);
+            int rowsDeleted = ps.executeUpdate();
+            return rowsDeleted > 0;
+        }));
     }
 
     @Override
     public List<Player> findPlayersByTeamId(Long teamId) {
-        return jdbcTemplate.query(SQL_FIND_BY_TEAM_ID, new PlayerRowMapper(teamService), teamId);
+        return jdbcTemplate.query(SQL_FIND_BY_TEAM_ID, playerRowMapper, teamId);
+    }
+
+    @Override
+    public boolean updatePlayerTeamId(Long playerId, Long teamId) {
+        return jdbcTemplate.update(SQL_UPDATE_TEAM, teamId, playerId) > 0;
     }
 }

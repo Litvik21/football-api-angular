@@ -12,9 +12,13 @@ public interface PlayerRepository {
 
     List<Player> findAll();
 
+    List<Player> findAllByIds(List<Long> playerIds);
+
     Player update(Player player);
 
-    void delete(Long id);
+    boolean delete(Long id);
 
     List<Player> findPlayersByTeamId(Long teamId);
+
+    boolean updatePlayerTeamId(Long playerId, Long teamId);
 }

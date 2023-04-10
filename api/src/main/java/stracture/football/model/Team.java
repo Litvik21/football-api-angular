@@ -26,9 +26,6 @@ public class Team {
     private BigDecimal balance;
     @Column(name = "commission")
     private Double commission;
-    @OneToMany
-    @JoinTable(name = "teams_players",
-            joinColumns = @JoinColumn(name = "team_id"),
-            inverseJoinColumns = @JoinColumn(name = "player_id"))
+    @OneToMany(mappedBy = "team")
     private List<Player> players;
 }

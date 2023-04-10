@@ -2,6 +2,8 @@ package stracture.football.service.impl;
 
 import stracture.football.model.Team;
 import stracture.football.repository.TeamRepository;
+
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import stracture.football.service.TeamService;
@@ -37,7 +39,11 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public boolean delete(Long id) {
-        repository.delete(id);
-        return repository.findById(id).isEmpty();
+        return repository.delete(id);
+    }
+
+    @Override
+    public boolean updatedBalances(Long id1, Long id2, BigDecimal balance1, BigDecimal balance2) {
+        return repository.updatedBalances(id1, id2, balance1, balance2);
     }
 }
