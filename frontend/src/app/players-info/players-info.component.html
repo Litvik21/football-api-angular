@@ -1,0 +1,29 @@
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Birth Date</th>
+    <th>Start Career</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let player of players">
+    <td>{{ player.id }}</td>
+    <td>{{ player.firstName }}</td>
+    <td>{{ player.lastName }}</td>
+    <td>{{ player.birthDate }}</td>
+    <td>{{ player.startCareer }}</td>
+    <td>
+      <button (click)="update(player.id)" style="margin-top: 5px" >Update</button>
+      <button (click)="transfer(player.id)" style="margin-top: 5px"  >Transfer</button>
+      <button (click)="deletePlayer(player.id)" style="margin-top: 5px" >Remove Player</button>
+    </td>
+  </tr>
+  <tr *ngIf="!players || players.length === 0">
+    <td colspan="4">No orders found.</td>
+  </tr>
+  </tbody>
+</table>

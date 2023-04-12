@@ -31,7 +31,7 @@ public class PlayersController {
                                     @PathVariable Long id) {
         Player player = playerMapper.toModel(dto);
         player.setId(id);
-        return playerMapper.toDto(service.save(player));
+        return playerMapper.toDto(service.update(player));
     }
 
     @GetMapping("/get/{id}")

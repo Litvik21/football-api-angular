@@ -31,7 +31,7 @@ export class PlayerService {
   }
 
   updatePlayer(player: Player): Observable<any> {
-    const url = `${this.playersUrl}/${player.id}`
+    const url = `${this.playersUrl}/remove/${player.id}`
     return this.http.put(url, player, this.httpOptions).pipe(
       catchError(this.handleError<any>('updatePlayer'))
     );

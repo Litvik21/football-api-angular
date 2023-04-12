@@ -1,0 +1,29 @@
+<div *ngIf="player">
+  <h2>Player Details</h2>
+  <p>
+    <label>First Name: {{ firstName }}</label>
+  </p>
+  <p>
+    <label>Last Name: {{ lastName }}</label>
+  </p>
+  <form (ngSubmit)="submitTeam()" [formGroup]="teamForm">
+
+    <p>
+      <label>Select NEW Team</label>
+      <label> By title:</label>
+      <select formControlName="team">
+        <option [ngValue]="null" disabled>Select Team</option>
+        <option *ngFor="let team of teams" [ngValue]="team.id">{{team.title}}</option>
+      </select>
+
+      <button type="submit">Submit</button>
+    </p>
+
+  </form>
+
+  <button (click)="goBack()">Go Back</button>
+
+  <button (click)="transfer()" style="margin-top: 5px">Transfer Player</button>
+</div>
+
+

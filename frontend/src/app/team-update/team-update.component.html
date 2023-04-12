@@ -1,0 +1,28 @@
+<div *ngIf="team">
+  <h2>Team Details</h2>
+  <p>
+    <label>Title:</label>
+    <input [(ngModel)]="title">
+  </p>
+  <p>
+    <label>Country:</label>
+    <input [(ngModel)]="country">
+  </p>
+  <p>
+    <label>City:</label>
+    <input [(ngModel)]="city">
+  </p>
+  <p>
+    <label>Balance:</label>
+    <input [(ngModel)]="balance">
+  </p>
+  <p>
+    <label>Commission:</label>
+    <input [(ngModel)]="commission">
+  </p>
+
+  <button (click)="goBack()">Go Back</button>
+
+  <button (click)="updateTeam()" style="margin-top: 5px">Update</button>
+</div>
+

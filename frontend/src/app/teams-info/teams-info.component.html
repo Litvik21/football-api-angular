@@ -1,0 +1,30 @@
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Country</th>
+    <th>City</th>
+    <th>Balance</th>
+    <th>Commission</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let team of teams">
+    <td>{{ team.id }}</td>
+    <td>{{ team.title }}</td>
+    <td>{{ team.country }}</td>
+    <td>{{ team.city }}</td>
+    <td>{{ team.balance }}</td>
+    <td>{{ team.commission }}</td>
+    <td>
+      <button (click)="update(team.id)" style="margin-top: 5px" >Update</button>
+      <button (click)="deleteTeam(team.id)" style="margin-top: 5px" >Remove Team</button>
+    </td>
+  </tr>
+  <tr *ngIf="!teams || teams.length === 0">
+    <td colspan="4">No orders found.</td>
+  </tr>
+  </tbody>
+</table>
