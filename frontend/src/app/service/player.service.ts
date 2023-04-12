@@ -52,6 +52,7 @@ export class PlayerService {
 
   removePlayer(id: number): Observable<any> {
     const url = `${this.playersUrl}/remove/${id}`;
+    console.log(url);
     return this.http.delete(url, this.httpOptions).pipe(
       catchError(this.handleError<any>(`removePlayer id=${id}`))
     );

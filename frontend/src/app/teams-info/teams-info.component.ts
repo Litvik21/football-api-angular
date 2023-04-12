@@ -28,6 +28,11 @@ export class TeamsInfoComponent implements OnInit {
   }
 
   deleteTeam(teamId: any) {
-    this.teamService.removeTeam(teamId);
+    this.teamService.removeTeam(teamId)
+      .subscribe(() => this.refreshPage());
+  }
+
+  refreshPage(): void {
+    window.location.reload();
   }
 }

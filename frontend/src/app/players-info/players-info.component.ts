@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Player } from '../model/player';
 import { PlayerService } from '../service/player.service';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-players-info',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 export class PlayersInfoComponent implements OnInit {
   players: Player[] = [];
   constructor(private playerService: PlayerService,
+              private location: Location,
               private router: Router) {
   }
 
@@ -32,7 +34,11 @@ export class PlayersInfoComponent implements OnInit {
   }
 
   deletePlayer(playerId: any) {
-    console.log(playerId)
-    this.playerService.removePlayer(playerId);
+    this.playerService.removePlayer(playerId)
+      .subscribe(() => this.refreshPage());
+  }
+
+  refreshPage(): void {
+    window.location.reload();
   }
 }
