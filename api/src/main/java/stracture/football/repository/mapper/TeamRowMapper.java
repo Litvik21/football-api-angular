@@ -16,7 +16,7 @@ public class TeamRowMapper implements RowMapper<Team> {
         team.setCountry(rs.getString("country"));
         team.setCity(rs.getString("city"));
         team.setBalance(rs.getBigDecimal("balance"));
-        team.setCommission(rs.getDouble("commission"));
+        team.setCommission(rs.getBigDecimal("commission"));
         return team;
     }
 }

@@ -1,47 +1,47 @@
 <div *ngIf="player">
   <h2>Player Details</h2>
-  <p>
-    <label>First Name:</label>
-    <input [(ngModel)]="firstName">
-  </p>
-  <p>
-    <label>Last Name:</label>
-    <input [(ngModel)]="lastName">
-  </p>
-
-  <p>
-    <label>Birth Date: </label>
-    <mat-form-field appearance="fill">
-      <mat-label>Choose a date</mat-label>
-      <input [matDatepicker]="birthDate" matInput>
-      <mat-datepicker-toggle [for]="birthDate" matSuffix></mat-datepicker-toggle>
-      <mat-datepicker #birthDate></mat-datepicker>
-    </mat-form-field>
-  </p>
-
-  <p>
-    <label>Start Career: </label>
-    <mat-form-field appearance="fill">
-      <mat-label>Choose a date</mat-label>
-      <input [matDatepicker]="startCareer" matInput>
-      <mat-datepicker-toggle [for]="startCareer" matSuffix></mat-datepicker-toggle>
-      <mat-datepicker #startCareer></mat-datepicker>
-    </mat-form-field>
-  </p>
-
-  <form (ngSubmit)="submitTeam()" [formGroup]="teamForm">
-
+  <form>
     <p>
-      <label>Select Team</label>
-      <label> By title:</label>
-      <select formControlName="team">
-        <option [ngValue]="null" disabled>Select Team</option>
-        <option *ngFor="let team of teams" [ngValue]="team.id">{{team.title}}</option>
-      </select>
-
-      <button type="submit">Submit</button>
+      <label>First Name:</label>
+      <input name="firstName" [(ngModel)]="firstName">
+    </p>
+    <p>
+      <label>Last Name:</label>
+      <input name="lastName" [(ngModel)]="lastName">
     </p>
 
+    <p>
+      <label>Birth Date: </label>
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input [matDatepicker]="birthDate" matInput>
+        <mat-datepicker-toggle [for]="birthDate" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #birthDate></mat-datepicker>
+      </mat-form-field>
+    </p>
+
+    <p>
+      <label>Start Career: </label>
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input [matDatepicker]="startCareer" matInput>
+        <mat-datepicker-toggle [for]="startCareer" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #startCareer></mat-datepicker>
+      </mat-form-field>
+    </p>
+
+    <form [formGroup]="teamForm">
+
+      <p>
+        <label>Select Team</label>
+        <label> By title:</label>
+        <select formControlName="team">
+          <option [ngValue]="null" disabled>Select Team</option>
+          <option *ngFor="let team of teams" [ngValue]="team.id">{{team.title}}</option>
+        </select>
+      </p>
+
+    </form>
   </form>
 
   <button (click)="goBack()">Go Back</button>

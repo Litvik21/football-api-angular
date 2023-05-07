@@ -7,5 +7,6 @@ export interface Team {
   city: string;
   balance: number;
   commission: number;
+  playerIds?: number[];
   players?: Player[];
 }

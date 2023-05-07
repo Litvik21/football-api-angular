@@ -20,7 +20,10 @@ export class TeamsInfoComponent implements OnInit {
 
   getTeams(): void {
     this.teamService.getTeams()
-      .subscribe(teams => this.teams = teams);
+      .subscribe(teams => {
+        this.teams = teams
+        console.log(this.teams)
+      });
   }
 
   update(teamId: any) {
@@ -28,11 +31,8 @@ export class TeamsInfoComponent implements OnInit {
   }
 
   deleteTeam(teamId: any) {
-    this.teamService.removeTeam(teamId)
-      .subscribe(() => this.refreshPage());
-  }
-
-  refreshPage(): void {
-    window.location.reload();
+    this.teamService.removeTeam(teamId).subscribe(() => {
+      this.teams = this.teams.filter(team => team.id !== teamId);
+    });
   }
 }

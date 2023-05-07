@@ -8,6 +8,6 @@ public record TeamResponseDto(Long id,
                               String country,
                               String city,
                               BigDecimal balance,
-                              Double commission,
+                              BigDecimal commission,
                               List<Long> playerIds) {
 }

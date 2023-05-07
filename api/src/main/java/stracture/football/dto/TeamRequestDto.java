@@ -6,5 +6,5 @@ public record TeamRequestDto(String title,
                              String country,
                              String city,
                              BigDecimal balance,
-                             Double commission) {
+                             BigDecimal commission) {
 }

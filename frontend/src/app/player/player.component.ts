@@ -12,6 +12,7 @@ import {TeamService} from "../service/team.service";
 })
 export class PlayerComponent implements OnInit {
   players: Player[] = [];
+  newPlayer: any;
   teamForm!: FormGroup;
   newTeam!: Team;
   teams: Team[] = [];
@@ -53,10 +54,24 @@ export class PlayerComponent implements OnInit {
   add(): void {
     let id = Math.max.apply(Math, this.players.map(function (p) {return p.id;}));
 
-    this.playerService.addPlayer({id: id + 1, firstName: this.firstName, lastName: this.lastName,
-    birthDate: this.birthDate, startCareer: this.startCareer, team: this.newTeam} as Player)
+    this.submitTeam();
+
+    this.newPlayer = {
+      id: id,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      birthDate: this.birthDate,
+      startCareer: this.startCareer,
+      teamId: this.newTeam?.id
+    };
+
+    this.playerService.addPlayer(this.newPlayer)
       .subscribe(player => {this.players.push(player)});
 
+    this.resetForms();
+  }
+
+  resetForms(): void {
     this.firstName = "";
     this.lastName = "";
     this.teamForm.reset();

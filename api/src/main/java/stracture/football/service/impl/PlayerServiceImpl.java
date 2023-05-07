@@ -1,9 +1,11 @@
 package stracture.football.service.impl;
 
+import org.springframework.transaction.annotation.Transactional;
 import stracture.football.model.Player;
 import stracture.football.model.Team;
 import stracture.football.repository.impl.PlayerRepositoryImpl;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -52,6 +54,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    @Transactional
     public boolean transfer(Long playerId, Long newTeamId) {
         Team newTeamOfPlayer = teamService.get(newTeamId);
         Player player = get(playerId);
@@ -68,12 +71,7 @@ public class PlayerServiceImpl implements PlayerService {
         return repository.findPlayersByTeamId(teamId);
     }
 
-    @Override
-    public List<Player> findAllByIds(List<Long> playerIds) {
-        return repository.findAllByIds(playerIds);
-    }
-
-    private boolean doTransferOperation(Long newTeamId, Player player,
+    protected boolean doTransferOperation(Long newTeamId, Player player,
                                      BigDecimal updatedBalance, BigDecimal totalCost) {
         Team currentTeam = player.getTeam();
 
@@ -83,15 +81,18 @@ public class PlayerServiceImpl implements PlayerService {
                 updatedBalance, currentTeam.getBalance().add(totalCost));
     }
 
-    private BigDecimal calculateTotalCost(Player player) {
+    protected BigDecimal calculateTotalCost(Player player) {
         BigDecimal transferCost = calculateCostOfTransfer(player);
-        Double commission = player.getTeam().getCommission();
-        return transferCost.multiply(BigDecimal.ONE.add(BigDecimal.valueOf(commission / PERCENTAGE_BASE)));
+        BigDecimal commission = player.getTeam().getCommission();
+        BigDecimal percent = commission.divide(BigDecimal.valueOf(PERCENTAGE_BASE));
+        BigDecimal commissionAmount = transferCost.multiply(percent);
+        return transferCost.add(commissionAmount);
     }
 
-    private BigDecimal calculateCostOfTransfer(Player player) {
+    protected BigDecimal calculateCostOfTransfer(Player player) {
         int agesOfCareer = LocalDate.now().getYear() - player.getStartCareer().getYear();
-        int monthsOfCareer = agesOfCareer * MONTHS_IN_YEAR + (MONTHS_IN_YEAR - player.getStartCareer().getMonthValue());
+        int monthsOfCareer = agesOfCareer * MONTHS_IN_YEAR + (MONTHS_IN_YEAR - player.getStartCareer().getMonthValue())
+                + LocalDate.now().getMonthValue();
         int ageOfPlayer = LocalDate.now().getYear() - player.getBirthDate().getYear();
         return BigDecimal.valueOf(monthsOfCareer * GENERAL_AMOUNT_OF_PLAYERS / ageOfPlayer);
     }

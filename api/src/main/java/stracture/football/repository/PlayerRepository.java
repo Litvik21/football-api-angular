@@ -12,8 +12,6 @@ public interface PlayerRepository {
 
     List<Player> findAll();
 
-    List<Player> findAllByIds(List<Long> playerIds);
-
     Player update(Player player);
 
     boolean delete(Long id);

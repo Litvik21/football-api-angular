@@ -73,6 +73,7 @@ export class PlayerUpdateComponent implements OnInit {
   }
 
   updatePlayer(): void {
+    this.submitTeam();
     this.player = {
       id: this.player.id,
       firstName: this.firstName != '' ? this.firstName : this.player.firstName,
@@ -82,7 +83,6 @@ export class PlayerUpdateComponent implements OnInit {
       teamId: this.newTeam?.id ?? this.player.teamId
     };
 
-    console.log(this.player)
     this.playerService.updatePlayer(this.player)
       .subscribe(() => this.goBack());
   }

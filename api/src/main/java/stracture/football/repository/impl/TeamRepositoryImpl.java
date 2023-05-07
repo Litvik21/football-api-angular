@@ -47,10 +47,10 @@ public class TeamRepositoryImpl implements TeamRepository {
             ps.setString(2, team.getCountry());
             ps.setString(3, team.getCity());
             ps.setBigDecimal(4, team.getBalance());
-            ps.setDouble(5, team.getCommission());
+            ps.setBigDecimal(5, team.getCommission());
             return ps;
         }, keyHolder);
-        team.setId((Long) keyHolder.getKey());
+        team.setId(keyHolder.getKey().longValue());
         return team;
     }
 

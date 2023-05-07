@@ -33,9 +33,13 @@ export class TeamComponent implements OnInit {
       city: this.city, balance: this.balance, commission: this.commission} as Team)
       .subscribe(team => {this.teams.push(team)});
 
-    this.title = "";
-    this.country = "";
-    this.city = "";
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.title = '';
+    this.country = '';
+    this.city = '';
     this.balance = 0;
     this.commission = 0;
   }

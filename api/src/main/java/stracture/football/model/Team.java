@@ -1,20 +1,22 @@
 package stracture.football.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "teams")
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
     @Column(name = "title")
     private String title;
@@ -25,7 +27,7 @@ public class Team {
     @Column(name = "balance")
     private BigDecimal balance;
     @Column(name = "commission")
-    private Double commission;
+    private BigDecimal commission;
     @OneToMany(mappedBy = "team")
     private List<Player> players;
 }

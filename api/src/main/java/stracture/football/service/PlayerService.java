@@ -17,6 +17,4 @@ public interface PlayerService {
     boolean transfer(Long playerId, Long newTeamId);
 
     List<Player> findPlayersByTeamId(Long teamId);
-
-    List<Player> findAllByIds(List<Long> playerIds);
 }

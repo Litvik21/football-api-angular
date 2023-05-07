@@ -27,8 +27,6 @@ public class PlayerRepositoryImpl implements PlayerRepository {
             "DELETE FROM players WHERE id = ?";
     private static final String SQL_FIND_BY_TEAM_ID =
             "SELECT * FROM players WHERE team_id = ?";
-    private static final String SQL_GET_ALL_BY_IDS =
-            "SELECT * FROM Player WHERE id IN (?)";
     private static final String SQL_UPDATE_TEAM =
             "UPDATE players SET team_id = ? WHERE id = ?";
 
@@ -53,7 +51,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
             ps.setLong(5, player.getTeam().getId());
             return ps;
         }, keyHolder);
-        player.setId((Long) keyHolder.getKey());
+        player.setId(keyHolder.getKey().longValue());
         return player;
     }
 
@@ -65,11 +63,6 @@ public class PlayerRepositoryImpl implements PlayerRepository {
     @Override
     public List<Player> findAll() {
         return jdbcTemplate.query(SQL_FIND_ALL, playerRowMapper);
-    }
-
-    @Override
-    public List<Player> findAllByIds(List<Long> playerIds) {
-        return jdbcTemplate.query(SQL_GET_ALL_BY_IDS,  new Object[] { playerIds }, playerRowMapper);
     }
 
     @Override

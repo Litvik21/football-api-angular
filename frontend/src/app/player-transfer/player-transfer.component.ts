@@ -71,6 +71,7 @@ export class PlayerTransferComponent implements OnInit {
   }
 
   transfer(): void {
+    this.submitTeam();
     this.playerService.transferPlayer(this.player.id, this.newTeam.id)
       .subscribe(() => this.goBack());
   }

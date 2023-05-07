@@ -21,8 +21,8 @@ public class TeamController {
 
     @PostMapping
     public TeamResponseDto save(@RequestBody TeamRequestDto dto) {
-        Team team = teamMapper.toModel(dto);
-        return teamMapper.toDto(teamService.save(team));
+        Team team = teamService.save(teamMapper.toModel(dto));
+        return teamMapper.toDto(team);
     }
 
     @PutMapping("/{id}")

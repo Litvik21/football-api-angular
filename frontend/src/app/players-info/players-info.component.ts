@@ -34,11 +34,8 @@ export class PlayersInfoComponent implements OnInit {
   }
 
   deletePlayer(playerId: any) {
-    this.playerService.removePlayer(playerId)
-      .subscribe(() => this.refreshPage());
-  }
-
-  refreshPage(): void {
-    window.location.reload();
+    this.playerService.removePlayer(playerId).subscribe(() => {
+      this.players = this.players.filter(player => player.id !== playerId);
+    });
   }
 }

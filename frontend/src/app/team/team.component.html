@@ -1,23 +1,25 @@
 <h2>Add Team</h2>
-<p>
-  <label>Title:</label>
-  <input [(ngModel)]="title">
-</p>
-<p>
-  <label>Country:</label>
-  <input [(ngModel)]="country">
-</p>
-<p>
-  <label>City:</label>
-  <input [(ngModel)]="city">
-</p>
-<p>
-  <label>Balance:</label>
-  <input [(ngModel)]="balance">
-</p>
-<p>
-  <label>Commission:</label>
-  <input [(ngModel)]="commission">
-</p>
+<form>
+  <p>
+    <label>Title:</label>
+    <input name="title" [(ngModel)]="title">
+  </p>
+  <p>
+    <label>Country:</label>
+    <input name="country" [(ngModel)]="country">
+  </p>
+  <p>
+    <label>City:</label>
+    <input name="city" [(ngModel)]="city">
+  </p>
+  <p>
+    <label>Balance:</label>
+    <input name="balance" [(ngModel)]="balance">
+  </p>
+  <p>
+    <label>Commission:</label>
+    <input name="commission" [(ngModel)]="commission">
+  </p>
+</form>
 
 <button (click)="add()">Add</button>

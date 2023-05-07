@@ -20,7 +20,8 @@
     <td>{{ team.commission }}</td>
     <td>
       <button (click)="update(team.id)" style="margin-top: 5px" >Update</button>
-      <button (click)="deleteTeam(team.id)" style="margin-top: 5px" >Remove Team</button>
+      <button (click)="deleteTeam(team.id)" style="margin-top: 5px" [disabled]="team.playerIds && team.playerIds.length > 0">
+        Remove Team</button>
     </td>
   </tr>
   <tr *ngIf="!teams || teams.length === 0">
