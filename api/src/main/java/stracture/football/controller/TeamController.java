@@ -1,5 +1,7 @@
 package stracture.football.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import stracture.football.dto.TeamRequestDto;
 import stracture.football.dto.TeamResponseDto;
 import stracture.football.dto.mapper.TeamMapper;
@@ -20,13 +22,16 @@ public class TeamController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Save team to DB")
     public TeamResponseDto save(@RequestBody TeamRequestDto dto) {
         Team team = teamService.save(teamMapper.toModel(dto));
         return teamMapper.toDto(team);
     }
 
     @PutMapping("/{id}")
+    @ApiOperation(value = "Update team")
     public TeamResponseDto update(@RequestBody TeamRequestDto dto,
+                                  @ApiParam(value = "Id of team that you want to update")
                                   @PathVariable Long id) {
         Team team = teamMapper.toModel(dto);
         team.setId(id);
@@ -34,11 +39,14 @@ public class TeamController {
     }
 
     @GetMapping("/get/{id}")
-    public TeamResponseDto get(@PathVariable Long id) {
+    @ApiOperation(value = "Getting team")
+    public TeamResponseDto get(@ApiParam(value = "Id of team that you want to get")
+            @PathVariable Long id) {
         return teamMapper.toDto(teamService.get(id));
     }
 
     @GetMapping
+    @ApiOperation(value = "Getting teams list")
     public List<TeamResponseDto> getAll() {
         return teamService.getAll().stream()
                 .map(teamMapper::toDto)
@@ -46,7 +54,9 @@ public class TeamController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public boolean remove(@PathVariable Long id) {
+    @ApiOperation(value = "Removing team")
+    public boolean remove(@ApiParam(value = "Id of team that you want to remove")
+            @PathVariable Long id) {
         return teamService.delete(id);
     }
 }

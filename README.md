@@ -26,6 +26,7 @@ and while transferring balance of teams will change.
 - Maven
 - MySQL
 - Hibernate
+- Liquibase
 - Tomcat
 - Swagger
 - Spring Web/Boot/MVC
