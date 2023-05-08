@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import stracture.football.dto.PlayerRequestDto;
 import stracture.football.dto.PlayerResponseDto;
 import stracture.football.model.Player;
-import stracture.football.model.Team;
 import stracture.football.service.TeamService;
 
 @Component

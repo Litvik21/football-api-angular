@@ -5,11 +5,6 @@ import stracture.football.dto.TeamResponseDto;
 import stracture.football.model.Player;
 import stracture.football.model.Team;
 import stracture.football.service.PlayerService;
-import stracture.football.service.TeamService;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import org.springframework.stereotype.Component;
 
 @Component

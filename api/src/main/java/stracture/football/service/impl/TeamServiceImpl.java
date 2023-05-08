@@ -2,7 +2,6 @@ package stracture.football.service.impl;
 
 import stracture.football.model.Team;
 import stracture.football.repository.TeamRepository;
-
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.stereotype.Service;

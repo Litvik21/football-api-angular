@@ -22,7 +22,6 @@ public class TeamRepositoryTest {
     @Autowired
     private TeamRepositoryImpl teamRepository;
 
-
     @Test
     @Sql("/scripts/team/create-table-team.sql")
     @Sql("/scripts/team/clear-data-base.sql")

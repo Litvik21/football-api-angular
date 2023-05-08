@@ -6,7 +6,6 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import stracture.football.dto.TeamRequestDto;
-import stracture.football.dto.TeamResponseDto;
-import stracture.football.dto.mapper.TeamMapper;
 import stracture.football.model.Team;
-import stracture.football.service.PlayerService;
 import stracture.football.service.TeamService;
-
 import java.math.BigDecimal;
 import java.util.Collections;
 

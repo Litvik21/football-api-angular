@@ -1,10 +1,8 @@
 package stracture.football.service;
 
 import stracture.football.model.Team;
-
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public interface TeamService {
     Team save(Team team);

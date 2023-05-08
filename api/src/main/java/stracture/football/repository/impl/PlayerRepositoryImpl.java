@@ -11,7 +11,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import stracture.football.repository.PlayerRepository;
 import stracture.football.repository.mapper.PlayerRowMapper;
-import stracture.football.service.TeamService;
 
 @Repository
 public class PlayerRepositoryImpl implements PlayerRepository {

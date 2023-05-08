@@ -38,7 +38,7 @@ and while transferring balance of teams will change.
 
 1. Install Docker Desktop and register on DockerHub
 
-2. Run next command in terminal from `football-api-angular` directory:
+2. Run next command in terminal from `football-api` directory:
 
    > mvn clean package
 

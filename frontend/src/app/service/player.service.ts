@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import {Player} from "../model/player";
+import { Player } from "../model/player";
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {

@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Player } from '../model/player';
 import { Team } from '../model/team';
-import { FormBuilder } from '@angular/forms';
-import { PlayerService } from '../service/player.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { TeamService } from '../service/team.service';

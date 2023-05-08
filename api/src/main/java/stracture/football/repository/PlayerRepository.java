@@ -1,7 +1,6 @@
 package stracture.football.repository;
 
 import stracture.football.model.Player;
-
 import java.util.List;
 import java.util.Optional;
 

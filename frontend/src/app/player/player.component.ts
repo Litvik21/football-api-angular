@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Player} from "../model/player";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {Team} from "../model/team";
-import {PlayerService} from "../service/player.service";
-import {TeamService} from "../service/team.service";
+import { Player } from "../model/player";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { Team } from "../model/team";
+import { PlayerService } from "../service/player.service";
+import { TeamService } from "../service/team.service";
 
 @Component({
   selector: 'app-player',

@@ -1,7 +1,6 @@
 package stracture.football.repository;
 
 import stracture.football.model.Team;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;

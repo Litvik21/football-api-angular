@@ -126,6 +126,4 @@ public class PlayerRepositoryTest {
         Assertions.assertTrue(actual);
         Assertions.assertEquals(2, afterUpdatingCountPlayersOfSecondTeam);
     }
-
-
 }
