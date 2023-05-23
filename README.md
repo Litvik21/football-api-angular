@@ -25,7 +25,7 @@ and while transferring balance of teams will change.
 - Java 17
 - Maven
 - MySQL
-- Hibernate
+- Hibernate/JDBC Template
 - Liquibase
 - Tomcat
 - Swagger
